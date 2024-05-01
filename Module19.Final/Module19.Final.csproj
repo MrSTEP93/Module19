@@ -6,12 +6,14 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="BBL\" />
+    <PackageReference Include="Dapper" Version="2.0.123" />
+    <PackageReference Include="System.Data.SQLite.Core" Version="1.0.118" />
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Dapper" Version="2.0.123" />
-    <PackageReference Include="System.Data.SQLite.Core" Version="1.0.118" />
+    <Reference Include="ConsoleHelper_50">
+      <HintPath>ConsoleHelper_50.dll</HintPath>
+    </Reference>
   </ItemGroup>
 
   <ItemGroup>
