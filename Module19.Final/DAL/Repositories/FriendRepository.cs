@@ -13,6 +13,10 @@ namespace Module19.Final.DAL.Repositories
         {
             return Query<FriendEntity>(@"select * from friends where user_id = :user_id", new { user_id = userId });
         }
+        public IEnumerable<FriendEntity> FindMeInFriendlistsOthers(int userId)
+        {
+            return Query<FriendEntity>(@"select * from friends where friend_id = :friend_id", new { friend_id = userId });
+        }
 
         public int Create(FriendEntity friendEntity)
         {
@@ -28,7 +32,23 @@ namespace Module19.Final.DAL.Repositories
     public interface IFriendRepository
     {
         int Create(FriendEntity friendEntity);
+
+        /// <summary>
+        /// Ищем людей, кто в друзьях у нас (у меня) (у того пользователя, кто работает)
+        /// Тех, кого добавили мы
+        /// </summary>
+        /// <param name="userId"></param>
+        /// <returns></returns>
         IEnumerable<FriendEntity> FindAllByUserId(int userId);
+
+        /// <summary>
+        /// Ищем тех, у кого мы в друзьях
+        /// Тех, кто добавил нас
+        /// </summary>
+        /// <param name="userId"></param>
+        /// <returns></returns>
+        IEnumerable<FriendEntity> FindMeInFriendlistsOthers(int userId);
+
         int Delete(int id);
     }
 }

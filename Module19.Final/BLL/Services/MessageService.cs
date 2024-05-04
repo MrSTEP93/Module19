@@ -20,27 +20,10 @@ namespace Module19.Final.BLL.Services
             messageRepository = new MessageRepository();
         }
 
-        public void ValidateAddress(string address)
-        {
-            int result = 0;
-            if (!new EmailAddressAttribute().IsValid(address))
-                throw new ArgumentNullException("Email", "Email address must contains a correct value!");
-        }
-
-        public void ValidateMessageText(string messageText)
-        {
-            if (string.IsNullOrEmpty(messageText))
-                throw new ArgumentNullException("Message Text", "Parameter must contains non-empty value!");
-
-            if (messageText.Length > 5000)
-                throw new ArgumentOutOfRangeException("Message length", "Message text is too much (more than 5000 symbols)");
-        }
-
         public void SendMessage(MessageSendingData messageSendingData)
         {
-
-            ValidateAddress(messageSendingData.RecipientEmail);
-            ValidateMessageText(messageSendingData.Content);
+            Validator.ValidateAddress(messageSendingData.RecipientEmail);
+            Validator.ValidateStringMaxSize(messageSendingData.Content, "Message content", 5000);
 
             var userService = new UserService();
             var foundUser = userService.FindByEmail(messageSendingData.RecipientEmail) ?? throw new UserNotFoundException();
@@ -69,11 +52,8 @@ namespace Module19.Final.BLL.Services
 
         public IEnumerable<Message> GetOutgoingMessagesByUserId(int senderId)
         {
-            //var messages = new List<Message>();
             return messageRepository.FindBySenderId(senderId).
                 Select(mes => new Message(mes.id, mes.content, senderId, mes.recipient_id)).ToList();
-
-            //return messages;
         }
 
         private Message ConstructMessageModel(MessageEntity messageEntity)

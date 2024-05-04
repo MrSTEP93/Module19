@@ -9,7 +9,7 @@ using static ConsoleHelper_50.Helper_50;
 
 namespace Module19.Final.PLL.Views
 {
-    public class UserMessagesOutgoingView
+    public class MessagesOutgoingView
     {
         static UserService userService = Program.userService;
 

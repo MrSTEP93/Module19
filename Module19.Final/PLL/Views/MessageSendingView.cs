@@ -35,53 +35,5 @@ namespace Module19.Final.PLL.Views
             }
 
         }
-
-        /*
-        private void OldShow()
-        {
-            var messageService = new MessageService();
-
-            WriteLnBg($" __ SENDING MESSAGE FORM __ ", ConsoleColor.Black, ConsoleColor.Cyan);
-            WriteLn($"*- Type recepient email (addressee):", true);
-            string recipientAddress = ReadLn();
-            int recipientId = 0;
-            try
-            {
-                recipientId = messageService.ValidateAddress(recipientAddress);
-            }
-            catch (UserNotFoundException)
-            {
-                WriteLn("There is no user with this email!", ConsoleColor.Red);
-            }
-            if (recipientId != 0)
-            {
-                WriteLn("*- Type message text:", true);
-                string messageText = ReadLn();
-                bool isTextValid = false;
-                try
-                {
-                    messageService.ValidateMessageText(messageText);
-                    isTextValid = true;
-                }
-                catch (Exception ex)
-                {
-                    WriteLn(ex.Message, ConsoleColor.Red);
-                }
-
-                if (isTextValid)
-                {
-                    try
-                    {
-                        messageService.SendMessage(messageText, user.Id, recipientId);
-                        WriteLn("Message successfuly delivered!", ConsoleColor.Green);
-                    }
-                    catch (Exception ex)
-                    {
-                        WriteLn($"Sending message failed: {ex.Message}", ConsoleColor.Red);
-                    }
-                }
-            }
-        }
-        */
     }
 }

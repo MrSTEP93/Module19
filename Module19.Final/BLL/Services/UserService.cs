@@ -25,21 +25,20 @@ namespace Module19.Final.BLL.Services
 
         public void Register(UserRegistrationData userRegData)
         {
+            // da wtf???
             Type resultType = userRegData.GetType();
             foreach (var prop in resultType.GetProperties())
             {
-                if (string.IsNullOrEmpty(prop.GetValue(userRegData, null).ToString()))
-                    throw new ArgumentNullException(prop.Name, "Parameter must contains non-empty value!");
+                var value = prop.GetValue(userRegData)?.ToString();
+                Validator.ValidateString(value, prop.Name);
             }
-            
-            if (userRegData.Password.Length < 8)
-                throw new ArgumentNullException("Password", "Password must be longer than 7 characters");
 
-            if (!new EmailAddressAttribute().IsValid(userRegData.Email))
-                throw new ArgumentNullException("Email", "Email address must contains a correct value!");
+            Validator.ValidateStringMinSize(userRegData.Password, "Password", 8);
+
+            Validator.ValidateAddress(userRegData.Email);
 
             if (userRepository.FindByEmail(userRegData.Email) != null)
-                throw new ArgumentException($"User with this email already registered!");
+                throw new UserAlreadyExistsException($"User with this email already registered!");
 
             var userEntity = new UserEntity()
             {
@@ -55,9 +54,7 @@ namespace Module19.Final.BLL.Services
 
         public User Authenticate(UserAuthenticationData userAuthenticationData)
         {
-            var findUserEntity = userRepository.FindByEmail(userAuthenticationData.Email);
-            if (findUserEntity is null) throw new UserNotFoundException();
-
+            var findUserEntity = userRepository.FindByEmail(userAuthenticationData.Email) ?? throw new UserNotFoundException();
             if (findUserEntity.password != userAuthenticationData.Password)
                 throw new WrongPasswordException();
 
@@ -66,9 +63,7 @@ namespace Module19.Final.BLL.Services
 
         public User FindByEmail(string email)
         {
-            var findUserEntity = userRepository.FindByEmail(email);
-            if (findUserEntity is null) throw new UserNotFoundException();
-
+            var findUserEntity = userRepository.FindByEmail(email) ?? throw new UserNotFoundException();
             return ConstructUserModel(findUserEntity);
         }
 

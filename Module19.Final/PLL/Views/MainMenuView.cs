@@ -18,54 +18,65 @@ namespace Module19.Final.PLL.Views
         {
             while (true)
             {
-                /*
-                WriteLnBg("Выберите действие: ", ConsoleColor.Black, ConsoleColor.DarkCyan);
-                WriteLn("* Просмотреть информацию о моём профиле (нажмите 1)");
-                WriteLn("* Редактировать мой профиль (нажмите 2)");
-                WriteLn("* Добавить в друзья (нажмите 3)");
-                WriteLn("* Написать сообщение (нажмите 4)");
-                WriteLn("* Выйти из профиля (нажмите 5)");
-                */
-                
-                WriteLn($"\nВаши сообщения: Входящие :({user.IncomingMessages.Count()}), Исходящие: ({user.OutgoingMessages.Count()})");
+                WriteLn($"\nВаши сообщения: Входящие: ({user.IncomingMessages.Count()}), Исходящие: ({user.OutgoingMessages.Count()})");
                 WriteLnBg("Выберите действие (введите нужную цифру): ", ConsoleColor.Black, ConsoleColor.DarkCyan);
                 WriteLn("* (1) Просмотреть информацию в моём профиле");
                 WriteLn("* (2) Редактировать мой профиль");
-                WriteLn("* (3) Добавить в друзья");
+                WriteLn("* (3) Сделать ничто");
                 WriteLn("* (4) Написать сообщение");
                 WriteLn("* (5) Просмотреть входящие сообщения");
                 WriteLn("* (6) Просмотреть исходящие сообщения");
-                WriteLn("* (7) Выйти из приложения", true);
+                WriteLn("* (7) Добавить друга");
+                WriteLn("* (8) Посмотреть список друзей");
+                WriteLn("* (0) Выйти из приложения", true);
 
                 string keyValue = ReadLn()?.Trim();
 
-                if (keyValue == "7") break;
+                if (keyValue == "0") break;
 
                 switch (keyValue)
                 {
-                    case "1":
+                    case "1":           //Просмотреть информацию в моём профиле
                         {
                             UserInfoView.Show(user);
                             break;
                         }
-                    case "2":
+                    case "2":           //Редактировать мой профиль
                         {
                             UserInfoUpdateView.Show(user);
                             break;
                         }
-                    case "4":
+                    case "3":           //Сделать ничто
+                        {
+                            // Здесь могла быть вьюшка со списком всех пользователей, и чтобы можно было ввести цифру и выбрать,
+                            // с кем взаимодействовать (посмотреть профиль, добавить в друзья, отправить сообщение).
+                            // Так же, аналогичное можно было бы сделать в списке друзей, но ...
+                            // Но я итак сильно отстаю по учебному курсу, поэтому не буду углубляться в это, пойду дальше
+                            break;
+                        }
+                    case "4":           // Написать сообщение
                         {
                             MessageSendingView.Show(user);
                             break;
                         }
-                    case "5":
+                    case "5":           //Просмотреть входящие сообщения
                         {
-                            UserMessagesIncomingView.Show(user);
+                            MessagesIncomingView.Show(user);
                             break;
                         }
-                    case "6":
+                    case "6":           //Просмотреть исходящие сообщения
                         {
-                            UserMessagesOutgoingView.Show(user);
+                            MessagesOutgoingView.Show(user);
+                            break;
+                        }
+                    case "7":           //Добавить друга
+                        {
+                            FriendAddView.Show(user);
+                            break;
+                        }
+                    case "8":           //Посмотреть список друзей
+                        {
+                            FriendListView.Show(user);
                             break;
                         }
                 }

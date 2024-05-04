@@ -17,6 +17,9 @@ namespace Module19.Final
         {
             WriteLnBg("Welcome from MrSTEP's unsocial club!", ConsoleColor.Black, ConsoleColor.Cyan);
             WelcomeView.Show();
+
+            WriteLn("Press Enter to exit application...");
+            ReadLn();
         }
     }
 }
